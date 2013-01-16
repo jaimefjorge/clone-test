@@ -43,6 +43,25 @@ namespace Webpage.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public ActionResult Login2(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                IQueryable<User> query = _context.Users;
+                query = query.Where(p => p.Username == user.Username);
+                query = query.Where(p => p.Password == user.Password);
+                var dbUser = query.FirstOrDefault();
+                if (dbUser == null || dbUser.Id == 0)
+                    return View(user);
+
+                FormsAuthentication.SetAuthCookie(user.Username, true /* createPersistentCookie */);
+                return RedirectToAction("Index");
+            }
+
+            return View(user);
+        }
+
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
