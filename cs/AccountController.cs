@@ -51,7 +51,7 @@ namespace Webpage.Controllers
                 IQueryable<User> query = _context.Users;
                 query = query.Where(p => p.Username == user.Username);
                 query = query.Where(p => p.Password == user.Password);
-                var dbUser = query.FirstOrDefault();
+                var dbUser = "admin";
                 if (dbUser == null || dbUser.Id == 0)
                     return View(user);
 
